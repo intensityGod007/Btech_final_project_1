@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { Routes, Route} from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import HeroSection from './components/HeroSection'
 import MultiStepForm from './components/MultiStepForm'
 import SuccessPage from './components/SuccessPage'
+import Navbar from './components/Navbar'
 
 function App() {
   const [currentView, setCurrentView] = useState('hero')
@@ -18,8 +20,13 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 overflow-hidden">
-      <AnimatePresence mode="wait">
+    <div className="min-h-screen overflow-hidden">
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<HeroSection />} />
+        <Route path='/generate-plan' element={<MultiStepForm onSubmit={handleFormSubmit} onExit={setCurrentView} />} />
+      </Routes>
+      {/* <AnimatePresence mode="popLayout">
         {currentView === 'hero' && (
           <motion.div
             key="hero"
@@ -40,7 +47,7 @@ function App() {
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.5 }}
           >
-            <MultiStepForm onSubmit={handleFormSubmit} />
+            <MultiStepForm onSubmit={handleFormSubmit} onExit={setCurrentView} />
           </motion.div>
         )}
         
@@ -55,7 +62,7 @@ function App() {
             <SuccessPage userData={userData} />
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   )
 }
